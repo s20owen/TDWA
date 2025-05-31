@@ -112,14 +112,14 @@ export const TOWER_COSTS = {
 };
 
 export const WAVES = [
-  [{ type: 'boss', count: 5 }],
+  [{ type: 'basic', count: 5 }],
   [{ type: 'basic', count: 8 }]
-  /*[{ type: 'fast', count: 2 }],
+  [{ type: 'fast', count: 2 }],
   [{ type: 'fast', count: 2 }, { type: 'basic', count: 12 }],
   [{ type: 'tank', count: 2 }, { type: 'basic', count: 5 }, { type: 'fast', count: 2 }],
   [{ type: 'tank', count: 5 }],
   [{ type: 'tank', count: 10 }],
-  [{ type: 'boss', count: 1 }]*/
+  [{ type: 'boss', count: 1 }]
 ];
 
 export const ENEMY_STATS = {
