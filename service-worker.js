@@ -1,9 +1,8 @@
-const CACHE_NAME = 'tdwa-cache-v7';
+const CACHE_NAME = 'tdwa-cache-v8';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/TDWA/index.html',
-  '/TDWA/style.css',
-  '/TDWA/main.js',
+  'index.html',
+  'style.css',
+  'main.js'
   // Add any additional assets you use (images, sounds, etc.)
 ];
 
