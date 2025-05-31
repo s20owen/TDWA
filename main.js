@@ -32,23 +32,20 @@ const ctx = canvas.getContext('2d');
 
 import { preloadImages } from './utils.js';
 import { TILE_IMAGES, ENEMY_IMAGES, BULLET_IMAGES, loadTowerImages } from './config.js';
-import { setTileSize } from './config.js';
+
 
 import Game from './classes/Game.js';
 
 const canvas = document.getElementById('game-canvas');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = 852;
+canvas.height = 393;
 
 const mapCols = 26;
 const mapRows = 11;
 
-const dynamicTileSize = Math.floor(Math.min(
-  canvas.width / mapCols,
-  canvas.height / mapRows
-));
 
-setTileSize(dynamicTileSize);
+
+
 
 const LOCAL_VERSION_KEY = 'pwa_version';
 async function checkAppVersion() {
@@ -92,3 +89,8 @@ checkAppVersion();
   await game.init();
   game.start();
 })();
+
+// main.js or a global script
+window.restartGame = function () {
+  location.reload();
+};

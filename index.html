@@ -60,6 +60,25 @@
     
     <button id="tower-toggle-btn"><img src="assets/images/towers/basic.png" alt="tower-basic"></button>
 
+    <div id="game-over-overlay" style="display: none;">
+      <div class="game-over-box">
+        <h1 id="game-over-message">Game Over!</h1>
+        <button onclick="restartGame()">🔁 Restart</button>
+      </div>
+    </div>
+
+    <div id="confirm-overlay" style="display:none;" class="overlay">
+      <div class="confirm-box">
+        <p id="confirm-message">Are you sure?</p>
+        <div class="confirm-buttons">
+          <button id="confirm-yes">✅ Yes</button>
+          <button id="confirm-no">❌ No</button>
+        </div>
+      </div>
+    </div>
+    
+    
+
   </div>
 
 
@@ -68,7 +87,7 @@
 
 </html>
   
-<!-- 
+
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -78,4 +97,4 @@
       });
     }
   </script>
-  -->
+  
