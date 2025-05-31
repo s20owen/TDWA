@@ -1,10 +1,10 @@
 {
   "name": "Mobile TD Game",
   "short_name": "TDGame",
-  "start_url": "/TDWA/",
+  "start_url": "/TDWA/index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#00ffcc",
-  "version": "1.0.5", 
+  "version": "1.0.6", 
   "icons": []
 }
