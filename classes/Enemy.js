@@ -81,10 +81,10 @@ export default class Enemy {
 
     // HP bar
     ctx.fillStyle = 'red';
-    ctx.fillRect(this.x, this.y - 6, getTileSize(), 4);
+    ctx.fillRect(this.x, this.y -6, getTileSize(), 4);
     ctx.fillStyle = 'lime';
     const hpWidth = (this.hp / this.maxHp) * getTileSize();
-    ctx.fillRect(this.x, this.y - 6, hpWidth, 4);
+    ctx.fillRect(this.x, this.y -6, hpWidth, 4);
   }
 
   takeDamage(amount) {
@@ -105,8 +105,6 @@ export default class Enemy {
       return;
     }
   }
-  
-  
   
   
   isAlive() {

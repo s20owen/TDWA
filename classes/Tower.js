@@ -70,7 +70,7 @@ export default class Tower {
       const centerY = posY + getTileSize() / 2;
       ctx.beginPath();
       ctx.arc(centerX, centerY, this.range, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(0, 128, 255, 0.2)';
+      ctx.fillStyle = 'rgba(0, 128, 255, 0.1)';
       ctx.fill();
     }
 
@@ -86,9 +86,9 @@ export default class Tower {
     }
 
     // Draw level
-    ctx.fillStyle = 'white';
-    ctx.font = '12px Arial';
-    ctx.fillText(`Lv${this.level}`, posX + 6, posY + 30);
+    //ctx.fillStyle = 'white';
+    //ctx.font = '12px Arial';
+    //ctx.fillText(`Lv${this.level}`, posX + 6, posY + 30);
   }
 
   getUpgradeCost() {
@@ -98,7 +98,8 @@ export default class Tower {
   upgrade() {
     if (this.level < TOWER_LEVELS.length) {
       this.level++;
-      this.damage += 0.5;
+      //this.damage += 0.5; // old way 
+      this.damage = Math.round(this.damage * 1.1 * 10) / 10;//new way?
       this.fireRate += 0.25;
       this.range += 4;
   

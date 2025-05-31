@@ -79,6 +79,7 @@ export default class Game {
     };    
 
     this.waveTimer = 0;
+    this.lastSpawnTime = 0;
     this.currentWave = 0;
     this.waveInterval = 1.0;
     this.waveIndex = 0;
@@ -252,16 +253,34 @@ export default class Game {
     // 1. Update enemies, detect lives lost
     for (const enemy of this.enemies) {
       enemy.update(dt);
+  
       if (enemy.reachedEnd && enemy.active) {
         this.lives--;
         enemy.active = false;
+  
+        if (enemy.type === 'boss') {
+          this.endGame('💀 A boss reached the end!');
+          return;
+        }
+  
+        if (this.lives <= 0) {
+          this.endGame('Game Over! You ran out of lives.');
+          return;
+        }
       }
     }
   
     // 2. Spawn enemies gradually
     if (!this.readyForNextWave && this.spawnQueue.length > 0) {
       this.waveTimer += dt;
-      if (this.waveTimer >= this.waveInterval) {
+    
+      const nextType = this.spawnQueue[0];
+      const interval = this.getSpawnInterval(nextType);
+    
+      // Always spawn immediately if nothing has been spawned this wave
+      const shouldSpawnNow = this.enemiesSpawned === 0 || this.waveTimer >= interval;
+    
+      if (shouldSpawnNow) {
         const type = this.spawnQueue.shift();
         this.spawnEnemy(type);
         this.waveTimer = 0;
@@ -269,75 +288,71 @@ export default class Game {
       }
     }
     
-
+    
+    
   
     // 3. Detect wave end
     const waveDone = (
       this.enemiesSpawned === this.enemiesPerWave &&
       this.enemies.every(e => !e.active)
     );
-    
-    if (waveDone && this.autoWave && !this.readyForNextWave) {
-      this.saveProgress();
-      this.startNextWave();
-    }
-    
-    if (waveDone && !this.autoWave) {
-      this.readyForNextWave = true;
-      document.getElementById('next-wave-container').style.display = 'block';
-    
-      // ✅ Only give map completion rewards at the final wave
-      if (
-        this.currentWave + 1 >= this.totalWaves &&
-        !this.mapCompletionRewarded
-      ) {
-        this.mapCompletionRewarded = true;
-    
-        let earned = 1;
-        if (this.lives > GAME_CONFIG.STARTING_LIVES / 2) earned += 1;
-        if (this.lives === GAME_CONFIG.STARTING_LIVES) earned += 1;
-        this.diamonds += earned;
-    
-        this.showMessage(`🏁 Map Complete! 💎 +${earned}`);
-        this.checkAchievements();
-        this.saveProgress();
+  
+    if (waveDone && !this.readyForNextWave) {
+      if (this.autoWave && this.waveIndex < WAVES.length) {
+        this.beginWave(); // ✅ Use beginWave to spawn enemies
+      } else {
+        this.readyForNextWave = true;
+        document.getElementById('next-wave-container').style.display = 'block';
+  
+        if (
+          this.currentWave >= this.totalWaves &&
+          this.enemies.length === 0 &&
+          !this.mapCompletionRewarded
+        ) {
+          this.mapCompletionRewarded = true;
+          const earned = this.checkAchievements();
+          this.showMessage(`🏁 Map Complete! 💎 +${earned}`);
+          this.saveProgress();
+        }
       }
     }
-    
-    
+  
     // 4. Update towers and bullets
     this.towers.forEach(t => t.update(dt, this.enemies, this.bulletPool));
     this.bulletPool.update(dt);
   
     // 5. Clean up dead enemies
     this.enemies = this.enemies.filter(e => e.active);
-
-        // Update HUD
+  
+    // 6. Update HUD
     this.hud.lives.textContent = `💛 ${this.lives}`;
     this.hud.gold.textContent = `💰 ${this.gold}`;
     this.hud.wave.textContent = `🧿 ${this.currentWave} / ${this.totalWaves}`;
     this.hud.diamonds.textContent = `💎 ${this.diamonds}`;
-
-
-    // Show "Next Wave" if all enemies are gone and all spawned
-    if (
-      !this.readyForNextWave &&
-      this.enemiesSpawned === this.enemiesPerWave &&
-      this.enemies.every(e => !e.active)
-    ) {
-      this.readyForNextWave = true;
-    
-      if (this.autoWave) {
-        this.currentWave++;
-        this.enemiesSpawned = 0;
-        this.enemiesPerWave += 1;
-        this.readyForNextWave = false;
-      } else {
-        this.nextWaveContainer.style.display = 'block';
-      }
-    }
-
   }
+  
+
+  beginWave() {
+    if (this.waveIndex < WAVES.length) {
+      this.readyForNextWave = false;
+      this.spawnQueue = [];
+  
+      for (const group of WAVES[this.waveIndex]) {
+        for (let i = 0; i < group.count; i++) {
+          this.spawnQueue.push(group.type);
+        }
+      }
+  
+      this.enemiesPerWave = this.spawnQueue.length;
+      this.waveIndex++;
+      this.enemiesSpawned = 0;
+      this.waveTimer = 0;
+      this.currentWave = this.waveIndex;
+      this.updateHUD();
+      this.nextWaveContainer.style.display = 'none';
+    }
+  }
+  
 
   render() {
     this.ctx.clearRect(0, 0, this.width, this.height);
@@ -538,28 +553,32 @@ export default class Game {
             renderPage();
           } else {
             if (this.diamonds >= diamondCost) {
-              const confirmUnlock = confirm(`Spend 💎${diamondCost} to unlock ${type}?`);
-              if (confirmUnlock) {
-                this.diamonds -= diamondCost;
-                this.unlocks[type].unlocked = true;
-                this.saveProgress();
-                this.showMessage(`${type} tower unlocked!`);
-                this.initTowerPanel();
-                this.updateHUD();
-    
-                setTimeout(() => {
-                  const icon = list.querySelector(`img[data-type="${type}"]`);
-                  if (icon) {
-                    icon.classList.add('unlocked-animate');
-                    setTimeout(() => icon.classList.remove('unlocked-animate'), 300);
-                  }
-                }, 100);
-              }
+              const confirmUnlock = this.showConfirm(`Spend 💎${diamondCost} to unlock ${type}?`).then(confirmUnlock => {
+                if (confirmUnlock) {
+                  this.diamonds -= diamondCost;
+                  this.unlocks[type].unlocked = true;
+                  this.saveProgress();
+                  this.showMessage(`${type} tower unlocked!`);
+                  this.initTowerPanel();
+                  this.updateHUD();
+        
+                  setTimeout(() => {
+                    const icon = list.querySelector(`img[data-type="${type}"]`);
+                    if (icon) {
+                      icon.classList.add('unlocked-animate');
+                      setTimeout(() => icon.classList.remove('unlocked-animate'), 300);
+                    }
+                  }, 100);
+                } else {
+                  this.showMessage("Cancelled.");
+                }
+              });
             } else {
               this.showMessage("Not enough diamonds to unlock this tower.");
             }
           }
         };
+        
     
         wrapper.appendChild(img);
         list.appendChild(wrapper);
@@ -609,6 +628,7 @@ export default class Game {
 
   checkAchievements() {
     const livesRatio = this.lives / GAME_CONFIG.STARTING_LIVES;
+    let earnedDiamonds = 0;
   
     const unlock = (id) => {
       if (!this.achievementsUnlocked[id]) {
@@ -616,6 +636,7 @@ export default class Game {
         if (achievement) {
           this.achievementsUnlocked[id] = true;
           this.diamonds += achievement.diamonds;
+          earnedDiamonds += achievement.diamonds;
           this.showMessage(`🏆 ${achievement.label} +💎${achievement.diamonds}`);
           this.saveProgress();
           this.updateHUD?.();
@@ -631,7 +652,63 @@ export default class Game {
       if (livesRatio >= 1.0) unlock('fullLives');
       else if (livesRatio >= 0.5) unlock('halfLives');
     }
+  
+    return earnedDiamonds;
   }
+  
+  checkGameOver() {
+    if (this.lives <= 0) {
+      this.endGame('Game Over! You ran out of lives.');
+      return true;
+    }
+    return false;
+  }
+  
+  endGame(message) {
+    this.paused = true;
+    this.showMessage(message); // optional
+  
+    // Show Game Over overlay
+    const overlay = document.getElementById('game-over-overlay');
+    const msg = document.getElementById('game-over-message');
+    if (overlay && msg) {
+      msg.textContent = message;
+      overlay.style.display = 'flex';
+      
+    }
+  }
+
+  showConfirm(message) {
+    return new Promise((resolve) => {
+      document.getElementById('confirm-message').textContent = message;
+      document.getElementById('confirm-overlay').style.display = 'flex';
+  
+      const yesBtn = document.getElementById('confirm-yes');
+      const noBtn = document.getElementById('confirm-no');
+  
+      const cleanup = () => {
+        document.getElementById('confirm-overlay').style.display = 'none';
+        yesBtn.onclick = null;
+        noBtn.onclick = null;
+      };
+  
+      yesBtn.onclick = () => {
+        cleanup();
+        resolve(true);
+      };
+  
+      noBtn.onclick = () => {
+        cleanup();
+        resolve(false);
+      };
+    });
+  }
+  
+  // boss spawn timer 2.5 second delay between spawns
+  getSpawnInterval(type) {
+    return (type === 'boss') ? 3.5 : 1.0; // Bosses spawn every 2.5s, others 1s
+  }
+  
   
 
 }
