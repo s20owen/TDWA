@@ -171,26 +171,32 @@ export default class Game {
 
     autoWaveToggle.checked = this.autoWave;
     this.nextWaveBtn.onclick = () => {
-      if (this.waveIndex < WAVES.length) {
-        this.readyForNextWave = false;
-        this.spawnQueue = [];
-    
-        for (const group of WAVES[this.waveIndex]) {
-          for (let i = 0; i < group.count; i++) {
-            this.spawnQueue.push(group.type);
-          }
-        }
-    
-        this.enemiesPerWave = this.spawnQueue.length; // ✅ Add this line
-    
-        this.waveIndex++;
-        this.enemiesSpawned = 0;
-        this.waveTimer = 0;
-        this.currentWave = this.waveIndex; // ✅
-        this.updateHUD();
-        this.nextWaveContainer.style.display = 'none';
+      if (this.waveIndex >= WAVES.length) {
+        this.showMessage('🏁 All waves complete!');
+        return;
       }
+    
+      const wave = WAVES[this.waveIndex];
+      if (!Array.isArray(wave)) return;
+    
+      this.readyForNextWave = false;
+      this.spawnQueue = [];
+    
+      for (const group of wave) {
+        for (let i = 0; i < group.count; i++) {
+          this.spawnQueue.push(group.type);
+        }
+      }
+    
+      this.enemiesPerWave = this.spawnQueue.length;
+      this.waveIndex++;
+      this.enemiesSpawned = 0;
+      this.waveTimer = 0;
+      this.currentWave = this.waveIndex;
+      this.updateHUD();
+      this.nextWaveContainer.style.display = 'none';
     };
+    
     
     
     
@@ -288,9 +294,6 @@ export default class Game {
       }
     }
     
-    
-    
-  
     // 3. Detect wave end
     const waveDone = (
       this.enemiesSpawned === this.enemiesPerWave &&
@@ -333,25 +336,33 @@ export default class Game {
   
 
   beginWave() {
-    if (this.waveIndex < WAVES.length) {
-      this.readyForNextWave = false;
-      this.spawnQueue = [];
-  
-      for (const group of WAVES[this.waveIndex]) {
-        for (let i = 0; i < group.count; i++) {
-          this.spawnQueue.push(group.type);
-        }
-      }
-  
-      this.enemiesPerWave = this.spawnQueue.length;
-      this.waveIndex++;
-      this.enemiesSpawned = 0;
-      this.waveTimer = 0;
-      this.currentWave = this.waveIndex;
-      this.updateHUD();
-      this.nextWaveContainer.style.display = 'none';
+    if (this.waveIndex >= WAVES.length) {
+      this.readyForNextWave = true;
+      this.showMessage('🏁 All waves complete!');
+      return;
     }
+  
+    const wave = WAVES[this.waveIndex];
+    if (!Array.isArray(wave)) return;
+  
+    this.readyForNextWave = false;
+    this.spawnQueue = [];
+  
+    for (const group of wave) {
+      for (let i = 0; i < group.count; i++) {
+        this.spawnQueue.push(group.type);
+      }
+    }
+  
+    this.enemiesPerWave = this.spawnQueue.length;
+    this.waveIndex++;
+    this.enemiesSpawned = 0;
+    this.waveTimer = 0;
+    this.currentWave = this.waveIndex;
+    this.updateHUD();
+    this.nextWaveContainer.style.display = 'none';
   }
+  
   
 
   render() {
