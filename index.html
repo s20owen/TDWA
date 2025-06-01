@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+   <!-- <meta name="viewport" content="width=852, height=393, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="assets/images/icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/images/icon-512.png" />
+  <link rel="apple-touch-startup-image" href="apple-launch-1125x2436.png">
+  <link rel="apple-touch-startup-image" href="apple-launch-1179x2556.png">
+  <link rel="stylesheet" href="style.css">
+  <title>TD Game</title>
+
+  
+</head>
+<body>
+  <div id="game-wrapper">
+    <canvas id="game-canvas"></canvas>
+    <div id="game-message"></div>
+
+
+    <div id="hud">
+      <div id="hud-left">
+        <span id="lives">💛 20</span>
+        <span id="gold">💰 100</span>
+        <span id="wave">🧿 1 / ∞</span>
+        <span id="diamonds">💎 0</span>
+      </div>
+      <div id="hud-right">
+        <label style="color:white; font-size: 12px;">
+          <input type="checkbox" id="auto-wave-toggle" />
+          Auto Wave
+        </label>
+        <button id="pause-btn">⏸</button>
+        <button id="speed-btn">⚡</button>
+      </div>
+    </div>
+
+    <div id="next-wave-container">
+      <button id="next-wave-btn">▶️ Next Wave</button>
+    </div>
+
+    <div id="tower-panel">
+      <div id="tower-stats"></div>
+      <button id="upgrade-btn">Upgrade</button>
+      <button id="sell-btn">Sell</button>
+    </div>
+
+    <div id="tower-panel-container">
+      <button id="tower-page-up">▲</button>
+      <div id="tower-list"></div>
+      <button id="tower-page-down">▼</button>
+    </div>
+    
+    <button id="tower-toggle-btn"><img src="assets/images/towers/basic.png" alt="tower-basic"></button>
+
+    <div id="game-over-overlay" style="display: none;">
+      <div class="game-over-box">
+        <h1 id="game-over-message">Game Over!</h1>
+        <button onclick="restartGame()">🔁 Restart</button>
+      </div>
+    </div>
+
+    <div id="confirm-overlay" style="display:none;" class="overlay">
+      <div class="confirm-box">
+        <p id="confirm-message">Are you sure?</p>
+        <div class="confirm-buttons">
+          <button id="confirm-yes">✅ Yes</button>
+          <button id="confirm-no">❌ No</button>
+        </div>
+      </div>
+    </div>
+    
+  
+  </div>
+  <script>
+    if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('service_worker.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+  </script>
+
+  <script type="module" src="main.js"></script>
+</body>
+
+</html>
+  
+  
