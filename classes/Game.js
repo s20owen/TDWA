@@ -1,9 +1,9 @@
 import GameMap from './Map.js';
 import Enemy from './Enemy.js';
-import { MAP_DATA, extractPathPoints } from '../config.js';
+import {extractPathPoints } from '../config.js';
 import Tower from './Tower.js';
 import { BulletPool } from './Bullet.js';
-import { GAME_CONFIG, TOWER_UNLOCKS, GAME_PROGRESS_DEFAULTS, ACHIEVEMENTS, ENEMY_STATS, WAVES, TOWER_COSTS  } from '../config.js';
+import { GAME_CONFIG, TOWER_UNLOCKS, GAME_PROGRESS_DEFAULTS, ACHIEVEMENTS, ENEMY_STATS, TOWER_COSTS, LEVELS  } from '../config.js';
 import { EnemyPool } from './EnemyPool.js';
 import BasicTower from './BasicTower.js';
 import SniperTower from './SniperTower.js';
@@ -15,13 +15,18 @@ import { loadTowerImages } from '../config.js';
 import { getTileSize } from '../config.js';
 
 export default class Game {
-  constructor(ctx, width, height, { tileImages, towerImages, enemyImages, bulletImages }) {
+  constructor(ctx, width, height, { tileImages, towerImages, enemyImages, bulletImages, MAP_DATA, WAVES, selectedLevel }) {
     this.ctx = ctx;
     this.width = width;
     this.height = height;
-    this.map = new GameMap(tileImages);
-  
-    const PATH_POINTS = extractPathPoints(MAP_DATA);
+
+    this.MAP_DATA = MAP_DATA;
+    this.WAVES = WAVES;
+    this.selectedLevel = selectedLevel;
+    this.map = new GameMap(tileImages, this.MAP_DATA);
+    
+
+    const PATH_POINTS = extractPathPoints(this.MAP_DATA);
 
     const GAME_PROGRESS_DEFAULTS = {
       diamonds: 0,
@@ -34,8 +39,8 @@ export default class Game {
         lightning: { unlocked: false, cost: 7 }
       }
     };
-    
-    this.totalWaves = WAVES.length;
+
+    this.totalWaves = this.WAVES.length;
     this.totalKills = 0; // 🔢 Track total kills
     this.enemies = [];
     this.lastTime = 0;
@@ -102,7 +107,7 @@ export default class Game {
     this.isPaused = false;
     this.speedMultiplier = 1;
     if (!this.panel || !this.statsBox || !this.upgradeBtn || !this.sellBtn) {
-      console.warn('Tower panel UI elements not found. Check your HTML structure.');
+      //console.warn('Tower panel UI elements not found. Check your HTML structure.');
     }
 
     this.achievementsUnlocked = {};
@@ -132,12 +137,11 @@ export default class Game {
     };
 
     this.nextWaveBtn.onclick = () => {
-      if (this.waveIndex < WAVES.length) {
+      if (this.waveIndex < this.WAVES.length) {
         this.beginWave();
-      } else {
-        this.showMessage('🏁 All waves complete!');
       }
     };
+    
 
     if (this.readyForNextWave && !this.autoWave) {
       this.nextWaveContainer.style.display = 'block';
@@ -161,15 +165,15 @@ export default class Game {
   }
 
 beginWave() {
-  const wave = WAVES[this.waveIndex];
+  const wave = this.WAVES[this.waveIndex];
 
   if (!Array.isArray(wave)) {
-    console.warn('⚠️ Invalid wave data:', wave);
+    //console.warn('⚠️ Invalid wave data:', wave);
     this.showMessage('⚠️ No more waves.');
     return;
   }
 
-  console.log('[Wave] Starting wave', this.waveIndex);
+  //console.log('[Wave] Starting wave', this.waveIndex);
 
   this.spawnQueue = [];
 
@@ -179,7 +183,7 @@ beginWave() {
     }
   }
 
-  console.log('➡️ Enemies queued:', this.spawnQueue);
+  //console.log('➡️ Enemies queued:', this.spawnQueue);
 
   this.enemiesPerWave = this.spawnQueue.length;
   this.enemiesSpawned = 0;
@@ -254,13 +258,33 @@ beginWave() {
 
     if (waveDone && !this.readyForNextWave) {
       this.waveIndex++;
-      if (this.autoWave && this.waveIndex < WAVES.length) {
+      if (this.autoWave && this.waveIndex < this.WAVES.length) {
         this.beginWave();
       } else {
         this.readyForNextWave = true;
         this.nextWaveContainer.style.display = 'block';
       }
+      this.checkAchievements();
     }
+
+          // ✅ Check for game win condition
+      const allWavesComplete = this.waveIndex >= this.WAVES.length;
+      const allEnemiesCleared = this.enemies.length === 0 && this.enemiesSpawned === this.enemiesPerWave;
+
+      if (allWavesComplete && allEnemiesCleared && !this.mapCompletionRewarded) {
+        this.mapCompletionRewarded = true;
+        const earned = this.checkAchievements();
+        this.saveProgress();
+        this.endGame(`🏁 Victory! 💎 +${earned}`);
+        const selectedLevel = parseInt(localStorage.getItem('selectedLevel'));
+        const unlockedLevel = parseInt(localStorage.getItem('unlockedLevel')) || 1;
+        const nextLevel = selectedLevel + 1;
+
+        if (nextLevel > unlockedLevel) {
+          localStorage.setItem('unlockedLevel', nextLevel);
+        }
+
+      }
 
     if (
       this.enemiesSpawned === this.enemiesPerWave &&
@@ -344,8 +368,8 @@ beginWave() {
       if (this.panel) this.panel.style.display = 'none';
 
   
-      const type = MAP_DATA[tileY]?.[tileX];
-      const allowedTiles = ['G', 'C1', 'C2', 'C3', 'C4', 'L1', , 'L2', 'L3'];
+      const type = this.MAP_DATA[tileY]?.[tileX];
+      const allowedTiles = ['G', 'C1', 'C2', 'C3', 'C4', 'L', 'L1', , 'L2', 'L3'];
 
       if (allowedTiles.includes(type) && this.selectedTowerType) {
         const cost = TOWER_COSTS[this.selectedTowerType] || 25;
@@ -398,7 +422,7 @@ beginWave() {
   this.upgradeBtn.onclick = () => {
     const cost = tower.getUpgradeCost();
     if (this.gold >= cost) {
-      const success = tower.upgrade();
+      const success = tower.upgrade(cost); // ✅ pass cost here
       if (success) {
         this.gold -= cost;
         this.showTowerPanel(tower);
@@ -411,10 +435,22 @@ beginWave() {
   };
   
   
-    this.sellBtn.onclick = () => {
-      this.towers = this.towers.filter(t => t !== tower);
-      this.panel.style.display = 'none';
-    };
+  this.sellBtn.onclick = () => {
+    const baseCost = TOWER_COSTS[tower.type] || 25;
+    const upgradeInvestment = tower.totalUpgradeCost || 0;
+    const totalSpent = baseCost + upgradeInvestment;
+  
+    const refundRatio = 0.7; // 70% refund
+    const refund = Math.floor(totalSpent * refundRatio);
+  
+    this.gold += refund;
+    this.towers = this.towers.filter(t => t !== tower);
+    this.panel.style.display = 'none';
+    this.updateHUD();
+  
+    this.showMessage(`💰 Refunded ${refund} gold`);
+  };
+  
     
   }
 
@@ -595,14 +631,14 @@ beginWave() {
       }
     };
   
-    if (this.totalKills >= 100) unlock('kill100');
-    if (this.totalKills >= 250) unlock('kill250');
+    if (this.totalKills >= 200) unlock('kill200');
+    if (this.totalKills >= 450) unlock('kill450');
   
-    if (!this.enemies.length && this.readyForNextWave) {
+    if (this.mapCompletionRewarded) {
       unlock('completeMap');
       if (livesRatio >= 1.0) unlock('fullLives');
       else if (livesRatio >= 0.5) unlock('halfLives');
-    }
+    }    
   
     return earnedDiamonds;
   }
@@ -625,7 +661,7 @@ beginWave() {
   }
 
   getSpawnInterval(type) {
-    return (type === 'boss') ? 3.5 : 1.0;
+    return (type === 'boss') ? 3.5 : 1.0; // 3.5 second boss spawn delay
   }
 
 

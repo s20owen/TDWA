@@ -230,6 +230,62 @@ html, body {
    font-size: 14px;
 }
 
+#level-screen {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #1e1e2f;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+#level-screen h1 {
+  color: #00ffc3;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+#level-select {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  width: 90%;
+  max-width: 600px;
+  padding: 20px;
+  background: #2a2a3d;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(0, 255, 195, 0.15);
+}
+
+.level-button {
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e1e2f;
+  background-color: #00ffc3;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+.level-button:hover {
+  transform: scale(1.05);
+  background-color: #00dab0;
+}
+
+.level-button.locked {
+  background-color: #444;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+
 @keyframes unlock-pop {
   0% {
     transform: scale(1);

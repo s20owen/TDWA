@@ -6,7 +6,7 @@ export default class Tower {
     this.x = x;
     this.y = y;
     this.range = 2.5 * getTileSize();
-    this.fireRate = 1;
+    this.fireRate = 1.7;
     this.cooldown = 0;
     this.damage = GAME_CONFIG.TOWER_DAMAGE;
     this.kills = 0;
@@ -92,26 +92,28 @@ export default class Tower {
   }
 
   getUpgradeCost() {
-    return 25 + (this.level - 1) * 15; // Example: 25 → 40 → 55...
+    //return 25 + (this.level - 1) * 15; // Example: 25 → 40 → 55...
+    return 50;
   }
   
-  upgrade() {
+  upgrade(cost) {
     if (this.level < TOWER_LEVELS.length) {
       this.level++;
-      //this.damage += 0.5; // old way 
-      this.damage = Math.round(this.damage * 1.1 * 10) / 10;//new way?
-      this.fireRate += 0.25;
+      this.damage = Math.round(this.damage * 1.1 * 10) / 10;
+      this.fireRate = Math.round(this.fireRate * 1.1 * 10) / 10;
       this.range += 4;
   
       const maxLevel = Math.max(...Object.keys(this.turretImages).map(n => parseInt(n)));
       const newLevel = Math.min(this.level, maxLevel);
       this.turretImage = this.turretImages[newLevel];
   
-      return true; // ✅ Successful upgrade
+      this.totalUpgradeCost = (this.totalUpgradeCost || 0) + cost;
+      return true;
     } else {
-      return false; // ❌ Already max level
+      return false;
     }
   }
+  
   
   
 }

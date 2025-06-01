@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tdgame-cache-v1';
+const CACHE_NAME = 'tdgame-cache-v2';
 const FILES_TO_CACHE = [
   'index.html',
   'main.js',

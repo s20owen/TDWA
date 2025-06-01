@@ -312,10 +312,9 @@ export default class Game {
 
   beginWave() {
     if (this.waveIndex >= WAVES.length) {
-      this.readyForNextWave = true;
-      this.showMessage('🏁 All waves complete!');
-      return;
+      return; // ✅ Let the update() method detect completion properly
     }
+    
   
     const wave = WAVES[this.waveIndex];
     if (!Array.isArray(wave)) return;
@@ -448,6 +447,7 @@ export default class Game {
     this.sellBtn.onclick = () => {
       this.towers = this.towers.filter(t => t !== tower);
       this.panel.style.display = 'none';
+      this.gold += cost;
     };
     
   }
