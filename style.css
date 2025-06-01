@@ -41,18 +41,22 @@ html, body {
   }
 
   /* HUD overlays the canvas */
-#hud {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  right: 6px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: white;
-  z-index: 10;
-  pointer-events: none;
-}
+  #hud {
+    position: absolute;
+    top: 8px;
+    width: calc(100% - 20px); /* safe inner spacing */
+    left: 15px;
+    right: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: white;
+    z-index: 10;
+    pointer-events: none;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
+  
 
 #hud-left span {
   margin-right: 10px;
@@ -61,6 +65,7 @@ html, body {
 
 #hud-right button {
   margin-left: 6px;
+  margin-right: 8px;
   font-size: 16px;
   background: #333;
   color: white;
