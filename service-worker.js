@@ -4,7 +4,7 @@ const ASSETS_TO_CACHE = [
   'style.css',
   'main.js',
   'manifest.json',
-  'sw.js'
+  'service-worker.js'
 ];
 
 self.addEventListener('install', (event) => {
