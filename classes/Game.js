@@ -123,6 +123,13 @@ export default class Game {
     this.nextWaveBtn = document.getElementById('next-wave-btn');
     const autoWaveToggle = document.getElementById('auto-wave-toggle');
 
+    this.devMode = localStorage.getItem('DEV_MODE') === 'true';
+
+    if (this.devMode) {
+      this.enableDevTools();
+    }
+
+
     autoWaveToggle.checked = this.autoWave;
     autoWaveToggle.onchange = (e) => {
       this.autoWave = e.target.checked;
@@ -463,7 +470,7 @@ beginWave() {
   endGame(message) {
     this.paused = true;
     this.showMessage(message); // optional
-  
+    localStorage.removeItem('selectedLevel');
     // Show Game Over overlay
     const overlay = document.getElementById('game-over-overlay');
     const msg = document.getElementById('game-over-message');
@@ -709,6 +716,36 @@ beginWave() {
       };
     });
   }
+
+  enableDevTools() {
+    const panel = document.getElementById('dev-panel');
+    if (panel) panel.classList.remove('hidden');
+  
+    window.devAddGold = () => {
+      this.gold += 1000;
+      this.updateHUD?.();
+    };
+  
+    window.devAddDiamonds = () => {
+      this.diamonds += 100;
+      this.updateHUD?.();
+    };
+  
+    window.devReset = () => {
+      localStorage.clear();
+      location.reload();
+    };
+
+    const closeBtn = document.getElementById('dev-close-btn');
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      localStorage.removeItem('DEV_MODE');
+      panel.classList.add('hidden');
+    };
+  }
+
+  }
+  
   
   
 }

@@ -305,6 +305,27 @@ html, body {
   cursor: not-allowed;
 }
 
+/* DEV MODE */
+
+.dev-tools {
+  position: fixed;
+  top: 50%;
+  right: 50%;
+  background: #111;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 9999;
+  font-family: monospace;
+}
+.dev-tools h4{
+  padding-bottom: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
 
 @keyframes unlock-pop {
   0% {
