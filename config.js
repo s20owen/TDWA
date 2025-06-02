@@ -9,19 +9,19 @@ export function getTileSize() {
 }
 
 export const MAP_DATA_1 = [
-    [ 'G',  'L',  'S',   'L1',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',  'G',    'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'L',  'P1',  'L1',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',  'G',    'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'L',  'P2',  'C2',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'T',   'G',    'G',  'G',    'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'L',  'P3',  'P4',   'P5', 'P6',   'P7',   'P8',   'P9',  'P10', 'G',   'G',   'G',    'G',   'G',   'G',    'G',  'G',    'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'C1', 'G',   'G',    'G',  'G',    'G',    'G',    'G',   'P11', 'G',   'G',   'G',    'G',   'G',   'G',    'G',  'G',    'G',   'T',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'P22',  'P23',  'P24',  'P25', 'P12', 'P26', 'P27', 'P28',  'P29', 'P30', 'P31',  'G',  'G',    'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'P21',  'G',    'G',    'G',   'P13', 'G',   'G',   'G',    'G',   'G',   'P32',  'G',   'G',   'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'P20',  'G',    'G',    'G',   'P14', 'G',   'G',   'G',    'G',   'G',   'P33',  'P34', 'P35', 'P36', 'P37', 'P38', 'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'P19',  'P18',  'P17',  'P16', 'P15', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',  'G',   'P39', 'G',  'T',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'T',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',  'G',   'P40', 'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',  'G',   'P41', 'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',  'T',   'P42', 'T',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',  'T',   'E',   'T',  'G',  'G',  'G',  'G', 'G']
+    [ 'G',  'L3',  'S',   'L1',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'L3',  'P1',  'L1',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'L3',  'P2',  'C3',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'T',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'L3',  'P3',  'P4',   'P5', 'P6',   'P7',   'P8',   'P9',  'P10', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'C5',  'L2',  'L2',   'G',  'G',    'G',    'G',    'G',   'P11', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'T',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',   'G',   'G',    'G',  'G',    'G',    'G',    'G',   'P12', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',   'G',   'G',    'G',  'P23',  'P24',  'P25',  'P26', 'P13', 'P27', 'P28', 'P29',  'P30', 'P31', 'P32',  'P33', 'P34',  'P35', 'P36', 'P37', 'P38',  'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',   'G',   'G',    'G',  'P22',  'G',    'G',    'G',   'P14', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P39',  'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',   'T',   'G',    'G',  'P21',  'G',    'G',    'G',   'P15', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P40',  'T',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',   'G',   'G',    'G',  'P20',  'P19',  'P18',  'P17', 'P16', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P41',  'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',   'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P42',  'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',   'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'T',   'P43',  'T',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',   'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'T',   'E',    'T',  'G',  'G',  'G', 'G']
   ];
 
   export const MAP_DATA_2 = [
@@ -92,19 +92,20 @@ export const MAP_DATA_1 = [
   };
 
 export const TILE_IMAGES = {
-  S: 'assets/images/tiles/path_start.png',
+  S: 'assets/images/tiles/path.svg',
   G: 'assets/images/tiles/grass.svg',
-  E: 'assets/images/tiles/path_end.png',
-  T: 'assets/images/tiles/tree.png',
+  E: 'assets/images/tiles/path.svg',
+  T: 'assets/images/tiles/tree.svg',
   P: 'assets/images/tiles/path.svg',
-  C1: 'assets/images/tiles/cornerL.png',
-  C2: 'assets/images/tiles/cornerR.png',
-  C3: 'assets/images/tiles/cornerBoth.png',
-  C4: 'assets/images/tiles/cornerLR.png',
-  L: 'assets/images/tiles/L.png',
-  L1: 'assets/images/tiles/L1.png',
-  L2: 'assets/images/tiles/L2.png',
-  L3: 'assets/images/tiles/L3.png'
+  C1: 'assets/images/tiles/C1.svg',
+  C2: 'assets/images/tiles/C2.svg',
+  C3: 'assets/images/tiles/C3.svg',
+  C4: 'assets/images/tiles/C4.svg',
+  C5: 'assets/images/tiles/C5.svg',
+  L1: 'assets/images/tiles/L1.svg',
+  L2: 'assets/images/tiles/L2.svg',
+  L3: 'assets/images/tiles/L3.svg',
+  L4: 'assets/images/tiles/L4.svg'
 };
 
 export const ENEMY_IMAGES = {
