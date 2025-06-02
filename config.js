@@ -9,19 +9,19 @@ export function getTileSize() {
 }
 
 export const MAP_DATA_1 = [
-    [ 'G',  'L3',  'S',   'L1',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'L3',  'P1',  'L1',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'L3',  'P2',  'C3',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'T',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'L3',  'P3',  'P4',   'P5', 'P6',   'P7',   'P8',   'P9',  'P10', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'C5',  'L2',  'L2',   'G',  'G',    'G',    'G',    'G',   'P11', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'T',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',   'G',   'G',    'G',  'G',    'G',    'G',    'G',   'P12', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',   'G',   'G',    'G',  'P23',  'P24',  'P25',  'P26', 'P13', 'P27', 'P28', 'P29',  'P30', 'P31', 'P32',  'P33', 'P34',  'P35', 'P36', 'P37', 'P38',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',   'G',   'G',    'G',  'P22',  'G',    'G',    'G',   'P14', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P39',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',   'T',   'G',    'G',  'P21',  'G',    'G',    'G',   'P15', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P40',  'T',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',   'G',   'G',    'G',  'P20',  'P19',  'P18',  'P17', 'P16', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P41',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',   'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P42',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',   'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'T',   'P43',  'T',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',   'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'T',   'E',    'T',  'G',  'G',  'G', 'G']
+    [ 'G',  'G',  'S',   'G',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'P1',  'G',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'P2',  'G',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'T',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'P3',  'P4',   'P5', 'P6',   'P7',   'P8',   'P9',  'P10', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'G',   'G',   'G',  'G',    'G',    'G',    'G',   'P11', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'T',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'P12', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'G',   'G',    'G',  'P23',  'P24',  'P25',  'P26', 'P13', 'P27', 'P28', 'P29',  'P30', 'P31', 'P32',  'P33', 'P34',  'P35', 'P36', 'P37', 'P38',  'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'G',   'G',    'G',  'P22',  'G',    'G',    'G',   'P14', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P39',  'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'T',   'G',    'G',  'P21',  'G',    'G',    'G',   'P15', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P40',  'T',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'G',   'G',    'G',  'P20',  'P19',  'P18',  'P17', 'P16', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P41',  'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P42',  'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'T',   'P43',  'T',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'T',   'E',    'T',  'G',  'G',  'G', 'G']
   ];
 
   export const MAP_DATA_2 = [
@@ -40,6 +40,7 @@ export const MAP_DATA_1 = [
     [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',  'T',   'E',   'T',  'G',  'G',  'G',  'G', 'G']
   ];
 
+  // level 1 waves
   export const WAVES_1 = [
     [{ type: 'basic', count: 7 }],
     [{ type: 'basic', count: 14 }],
@@ -51,13 +52,14 @@ export const MAP_DATA_1 = [
     [{ type: 'tank', count: 27 }, { type: 'basic', count: 7 }],
     [{ type: 'tank', count: 32 }, { type: 'fast', count: 3 }],
     [{ type: 'tank', count: 32 }, { type: 'fast', count: 10 }],
-    [{ type: 'boss', count: 3 }],
     [{ type: 'boss', count: 5 }],
-    [{ type: 'boss', count: 8 }],
-    [{ type: 'boss', count: 12 }],
+    [{ type: 'boss', count: 10 }],
     [{ type: 'boss', count: 15 }],
+    [{ type: 'boss', count: 20 }],
+    [{ type: 'boss', count: 25 }, {type: 'plane', count: 2}]
   ];
   
+// level 2 waves
   export const WAVES_2 = [
     [{ type: 'basic', count: 7 }],
     [{ type: 'basic', count: 14 }],
@@ -114,7 +116,8 @@ export const ENEMY_IMAGES = {
   tank: 'assets/images/enemies/tank.svg',
   splitter: 'assets/images/enemies/baddie.svg',
   boss: 'assets/images/enemies/boss.svg',
-  healer: 'assets/images/enemies/healer.svg'
+  healer: 'assets/images/enemies/healer.svg',
+  plane: 'assets/images/enemies/plane.svg'
 };
 
 
@@ -144,8 +147,9 @@ export const ENEMY_STATS = {
   fast:     { hp: 3, speed: 80, reward: 5 },
   tank:     { hp: 15, speed: 30, reward: 7 },
   splitter: { hp: 4, speed: 45, reward: 5 },
-  boss:     { hp: 55, speed: 25, reward: 25 },
-  healer:   { hp: 3, speed: 60, reward: 5}
+  boss:     { hp: 70, speed: 30, reward: 25 },
+  healer:   { hp: 3, speed: 60, reward: 5},
+  plane:    { hp: 10, speed: 50, reward: 10}
 };
 
 
@@ -167,6 +171,8 @@ export const GAME_PROGRESS_DEFAULTS = {
 export const ACHIEVEMENTS = [
   { id: 'kill200', label: 'Slay 200 Enemies', diamonds: 1 },
   { id: 'kill450', label: 'Slay 450 Enemies', diamonds: 1 },
+  { id: 'kill750', label: 'Slay 750 Enemies', diamonds: 1 },
+  { id: 'kill1000', label: 'Slay 1000 Enemies', diamonds: 1 },
   { id: 'completeMap', label: 'Map Complete', diamonds: 1 },
   { id: 'halfLives', label: 'Map Complete (50%+ Lives)', diamonds: 1 },
   { id: 'fullLives', label: 'Map Complete (All Lives)', diamonds: 1 }
@@ -238,32 +244,3 @@ export const BULLET_IMAGES = {
   basic: 'assets/images/bullets/basic.png'
 };
 
-/*
-export const TILE_IMAGES = {
-    G: 'assets/images/tiles/grass.png',
-    S: 'assets/images/tiles/path_start.png',
-    E: 'assets/images/tiles/path_end.png',
-    R: 'assets/images/tiles/rock.png',
-    T: 'assets/images/tiles/tree.png',
-    B: 'assets/images/tiles/bush.png',
-    L: 'assets/images/tiles/grass_line.png',
-    P1: 'assets/images/tiles/path1.png',
-    P2: 'assets/images/tiles/path2.png',
-    P3: 'assets/images/tiles/path3.png',
-    P4: 'assets/images/tiles/path4.png',
-    P5: 'assets/images/tiles/path5.png',
-    P6: 'assets/images/tiles/path6.png',
-    P7: 'assets/images/tiles/path7.png',
-    P8: 'assets/images/tiles/path8.png',
-    P9: 'assets/images/tiles/path9.png',
-    P10: 'assets/images/tiles/path10.png',
-    C1: 'assets/images/tiles/corner1.png',
-    C2: 'assets/images/tiles/corner2.png',
-    C3: 'assets/images/tiles/corner3.png',
-    C4: 'assets/images/tiles/corner4.png',
-    C5: 'assets/images/tiles/corner5.png',
-    C6: 'assets/images/tiles/corner6.png',
-    C7: 'assets/images/tiles/corner7.png',
-    C8: 'assets/images/tiles/corner8.png',
-  };
-  */

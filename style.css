@@ -44,36 +44,51 @@ html, body {
   #hud {
     position: absolute;
     top: 8px;
-    width: calc(100% - 20px); /* safe inner spacing */
-    left: 15px;
-    right: 15px;
+    left: 0;
+    width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 14px;
     color: white;
     z-index: 10;
     pointer-events: none;
-    padding: 0 8px;
-    box-sizing: border-box;
+  }
+
+  #hud-left{
+    margin-left: 10px;
+  }
+
+  #hud-right{
+    margin-right: 10px;
   }
   
-
-#hud-left span {
-  margin-right: 10px;
-  pointer-events: auto;
-}
-
-#hud-right button {
-  margin-left: 6px;
-  margin-right: 8px;
-  font-size: 16px;
-  background: #333;
-  color: white;
-  border: none;
-  padding: 4px 8px;
-  border-radius: 6px;
-  pointer-events: auto;
-}
+  #hud-left,
+  #hud-right {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px; /* consistent spacing between items */
+  }
+  
+  #hud-left span {
+    pointer-events: auto;
+  }
+  
+  #hud-right button {
+    font-size: 16px;
+    background: #333;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
 #auto-wave-toggle{
   pointer-events: auto;
@@ -81,7 +96,7 @@ html, body {
 
 #next-wave-container {
   position: absolute;
-  bottom: 10px;
+  bottom: 50%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;

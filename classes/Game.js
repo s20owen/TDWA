@@ -633,6 +633,8 @@ beginWave() {
   
     if (this.totalKills >= 200) unlock('kill200');
     if (this.totalKills >= 450) unlock('kill450');
+    if (this.totalKills >= 750) unlock('kill750');
+    if (this.totalKills >= 1000) unlock('kill1000');
   
     if (this.mapCompletionRewarded) {
       unlock('completeMap');
@@ -661,7 +663,16 @@ beginWave() {
   }
 
   getSpawnInterval(type) {
-    return (type === 'boss') ? 3.5 : 1.0; // 3.5 second boss spawn delay
+    const spawnDelays = {
+      boss: 3.5,
+      megaBoss: 3.5,
+      tank: 1.5,
+      fast: 0.5,
+      plane: 2.5
+      // Add more types here if needed
+    };
+  
+    return spawnDelays[type] || 1.0; // Default to 1.0s if not specified
   }
 
 
