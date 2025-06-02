@@ -25,6 +25,8 @@ export default class Game {
     this.selectedLevel = selectedLevel;
     this.map = new GameMap(tileImages, this.MAP_DATA);
     
+    this.achievementsAwardedThisSession = {};
+
 
     const PATH_POINTS = extractPathPoints(this.MAP_DATA);
 
@@ -109,8 +111,6 @@ export default class Game {
     if (!this.panel || !this.statsBox || !this.upgradeBtn || !this.sellBtn) {
       //console.warn('Tower panel UI elements not found. Check your HTML structure.');
     }
-
-    this.achievementsUnlocked = {};
 
   }
 
@@ -273,6 +273,7 @@ beginWave() {
 
       if (allWavesComplete && allEnemiesCleared && !this.mapCompletionRewarded) {
         this.mapCompletionRewarded = true;
+        this.mapCompleted = true;
         const earned = this.checkAchievements();
         this.saveProgress();
         this.endGame(`🏁 Victory! 💎 +${earned}`);
@@ -401,8 +402,13 @@ beginWave() {
     const centerX = tower.x * getTileSize() + getTileSize() / 2;
     const centerY = tower.y * getTileSize() + getTileSize();
   
-    this.panel.style.left = `${canvasRect.left + centerX}px`;
-    this.panel.style.top = `${canvasRect.top + centerY}px`;
+    //this.panel.style.left = `${canvasRect.left + centerX}px`;
+    //this.panel.style.top = `${canvasRect.top + centerY}px`;
+    const tileSize = getTileSize();
+    this.panel.style.left = `${tower.x * tileSize + tileSize / 2}px`;
+    this.panel.style.top = `${tower.y * tileSize + tileSize * 2}px`;
+    this.panel.style.transform = 'translate(-50%, -100%)'; // center above
+
     this.panel.style.position = 'absolute';
     this.panel.style.display = 'block';
   
@@ -471,7 +477,6 @@ beginWave() {
   loadProgress() {
     const saved = JSON.parse(localStorage.getItem('towerProgress'));
     const fallback = JSON.parse(JSON.stringify(GAME_PROGRESS_DEFAULTS));
-  
     // Merge unlocks
     const mergedUnlocks = { ...fallback.unlocks };
     if (saved?.unlocks) {
@@ -618,17 +623,19 @@ beginWave() {
     let earnedDiamonds = 0;
   
     const unlock = (id) => {
-      if (!this.achievementsUnlocked[id]) {
-        const achievement = ACHIEVEMENTS.find(a => a.id === id);
-        if (achievement) {
-          this.achievementsUnlocked[id] = true;
-          this.diamonds += achievement.diamonds;
-          earnedDiamonds += achievement.diamonds;
-          this.showMessage(`🏆 ${achievement.label} +💎${achievement.diamonds}`);
-          this.saveProgress();
-          this.updateHUD?.();
-        }
-      }
+      if (this.achievementsUnlocked[id]) return; // already unlocked
+      if (this.achievementsAwardedThisSession[id]) return; // already awarded this run
+  
+      const achievement = ACHIEVEMENTS.find(a => a.id === id);
+      if (!achievement) return;
+  
+      this.achievementsUnlocked[id] = true;
+      this.achievementsAwardedThisSession[id] = true; // ✅ prevent same-session re-award
+      this.diamonds += achievement.diamonds;
+      earnedDiamonds += achievement.diamonds;
+      this.showMessage(`🏆 ${achievement.label} +💎${achievement.diamonds}`);
+      this.saveProgress();
+      this.updateHUD?.();
     };
   
     if (this.totalKills >= 200) unlock('kill200');
@@ -640,10 +647,11 @@ beginWave() {
       unlock('completeMap');
       if (livesRatio >= 1.0) unlock('fullLives');
       else if (livesRatio >= 0.5) unlock('halfLives');
-    }    
+    }
   
     return earnedDiamonds;
-  }
+  } //localStorage.setItem('towerProgress', JSON.stringify(GAME_PROGRESS_DEFAULTS)); reset local storage
+  
   
   checkGameOver() {
     if (this.lives <= 0) {

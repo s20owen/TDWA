@@ -6,7 +6,7 @@ export default class SlowTower extends Tower {
     super(x, y, images);
     this.range = 2.5 * getTileSize();
     this.fireRate = 1;
-    this.damage = 1;
+    this.damage = 0;
     this.slowDuration = 1.5;
     this.slowFactor = 0.5;
   }

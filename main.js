@@ -111,11 +111,17 @@ if (!selectedLevel) {
   })();
 }
 
-
-
-
-// main.js or a global script
+// restart the game function
 window.restartGame = function () {
   localStorage.removeItem('selectedLevel');
-  window.location.reload();
+
+  // Hide game canvas and overlays
+  document.getElementById('game-canvas').style.display = 'none';
+  document.getElementById('game-over-overlay').style.display = 'none';
+
+  // Show level select screen again
+  document.getElementById('level-select-screen').style.display = 'flex';
+
+  // Optionally reset other state like music, HUD, etc.
 };
+

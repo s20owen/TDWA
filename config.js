@@ -206,6 +206,7 @@ export function extractPathPoints(map) {
   return points.map(p => ({ x: p.x, y: p.y }));
 }
 
+// this is where tower upgrad images are
 export async function loadTowerImages() {
   const towerTypes = ['basic', 'sniper', 'splash', 'slow', 'poison', 'lightning'];
   const levels = TOWER_LEVELS;
