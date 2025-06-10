@@ -6,7 +6,7 @@ export default class LightningTower extends Tower {
     super(x, y, images);
     this.range = 3 * getTileSize();
     this.fireRate = 1.2;
-    this.damage = 1;
+    this.damage = 1.2;
     this.chainCount = 3;
   }
 

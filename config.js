@@ -7,13 +7,13 @@ let tileSize = 32;
 export function getTileSize() {
   return tileSize;
 }
-
+// 13 x27
 export const MAP_DATA_1 = [
-    [ 'G',  'G',  'S',   'G',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'P1',  'G',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'P2',  'G',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'T',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'S',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'P1',  'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'P2',  'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'T',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
     [ 'G',  'G',  'P3',  'P4',   'P5', 'P6',   'P7',   'P8',   'P9',  'P10', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',   'G',  'G',    'G',    'G',    'G',   'P11', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'T',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
+    [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'P11', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'T',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
     [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'P12', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'G',    'G',  'G',  'G',  'G', 'G'],
     [ 'G',  'G',  'G',   'G',    'G',  'P23',  'P24',  'P25',  'P26', 'P13', 'P27', 'P28', 'P29',  'P30', 'P31', 'P32',  'P33', 'P34',  'P35', 'P36', 'P37', 'P38',  'G',  'G',  'G',  'G', 'G'],
     [ 'G',  'G',  'G',   'G',    'G',  'P22',  'G',    'G',    'G',   'P14', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',   'G',   'G',   'P39',  'G',  'G',  'G',  'G', 'G'],
@@ -25,21 +25,27 @@ export const MAP_DATA_1 = [
   ];
 
   export const MAP_DATA_2 = [
-    [ 'G',  'L',  'S',   'L1',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',  'G',    'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'L',  'P1',  'L1',   'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',  'G',    'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'L',  'P2',  'C2',   'L3', 'L3',   'L3',   'L3',   'L3',  'L3',  'C4',  'G',   'G',    'G',   'T',   'G',    'G',  'G',    'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'L',  'P3',  'P4',   'P5', 'P6',   'P7',   'P8',   'P9',  'P10', 'L1',  'G',   'G',    'G',   'G',   'G',    'G',  'G',    'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'C1', 'L2',  'L2',   'L2', 'L2',   'L2',   'L2',   'C3',  'P11', 'C2',  'G',   'G',    'G',   'G',   'G',    'G',  'G',    'G',   'T',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'P22',  'P23',  'P24',  'P25', 'P12', 'P26', 'P27', 'P28',  'P29', 'P30', 'P31',  'G',  'G',    'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'P21',  'G',    'G',    'G',   'P13', 'G',   'G',   'G',    'G',   'G',   'P32',  'G',   'G',   'G',   'G',   'G',   'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'P20',  'G',    'G',    'G',   'P14', 'G',   'G',   'G',    'G',   'G',   'P33',  'P34', 'P35', 'P36', 'P37', 'P38', 'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'P19',  'P18',  'P17',  'P16', 'P15', 'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',  'G',   'P39', 'G',  'T',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'T',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',  'G',   'P40', 'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',  'G',   'P41', 'G',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',  'T',   'P42', 'T',  'G',  'G',  'G',  'G', 'G'],
-    [ 'G',  'G',  'G',   'G',    'G',  'G',    'G',    'G',    'G',   'G',   'G',   'G',   'G',    'G',   'G',   'G',    'G',   'G',    'G',  'T',   'E',   'T',  'G',  'G',  'G',  'G', 'G']
+    [ 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G' ],
+    [ 'G', 'T', 'T', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'G' ],
+    [ 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G' ],
+    [ 'G', 'T', 'G', 'G', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G' ],
+    [ 'G', 'G', 'T', 'G', 'G', 'G', 'P13', 'P14', 'P15', 'P16', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'G', 'G', 'T', 'G' ],
+    [ 'G', 'T', 'G', 'G', 'G', 'G', 'P12', 'G', 'G', 'P17', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'T', 'G', 'G', 'G', 'G' ],
+    [ 'T', 'G', 'G', 'G', 'G', 'G', 'P11', 'G', 'G', 'P18', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G' ],
+    [ 'G', 'G', 'G', 'T', 'G', 'G', 'P10', 'G', 'G', 'P19', 'P20', 'P21', 'P22', 'P23', 'P24', 'P25', 'P26', 'P27', 'P28', 'P29', 'P30', 'P31', 'G', 'G', 'G', 'G', 'G' ],
+    [ 'T', 'G', 'P5', 'P6', 'P7', 'P8', 'P9', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'P32', 'G', 'G', 'G', 'G', 'G' ],
+    [ 'G', 'G', 'P4', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'P33', 'G', 'G', 'G', 'G', 'G' ],
+    [ 'T', 'G', 'P3', 'G', 'G', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'T', 'P34', 'T', 'G', 'G', 'T', 'G' ],
+    [ 'S', 'P1', 'P2', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'G', 'G', 'T', 'P35', 'T', 'G', 'G', 'G', 'G' ],
+    [ 'G', 'T', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'T', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'T', 'E', 'T', 'G', 'G', 'G', 'G' ],
   ];
 
+  // Test wave
+  /*
+  export const WAVES_1 = [
+    [{ type: 'basic', count: 7 }]
+    
+  ];*/
   // level 1 waves
   export const WAVES_1 = [
     [{ type: 'basic', count: 7 }],
@@ -66,7 +72,7 @@ export const MAP_DATA_1 = [
     [{ type: 'basic', count: 21}],
     [{ type: 'fast', count: 2 }, { type: 'basic', count: 21 }],
     [{ type: 'fast', count: 8 }, { type: 'basic', count: 28 }],
-    [{ type: 'tank', count: 5 }],
+    [{ type: 'tank', count: 20 }],
     [{ type: 'tank', count: 15 }, { type: 'basic', count: 5 }],
     [{ type: 'tank', count: 27 }, { type: 'basic', count: 7 }],
     [{ type: 'tank', count: 32 }, { type: 'fast', count: 3 }],
@@ -74,26 +80,12 @@ export const MAP_DATA_1 = [
     [{ type: 'boss', count: 3 }],
     [{ type: 'boss', count: 5 }],
     [{ type: 'boss', count: 8 }],
-    [{ type: 'boss', count: 12 }],
-    [{ type: 'boss', count: 15 }],
+    [{ type: 'boss', count: 12 }, {type: 'plane', count: 2}],
+    [{ type: 'boss', count: 15 }, {type: 'plane', count: 4}]
   ];
   
-  export const LEVELS = {
-    1: {
-      map: MAP_DATA_1,
-      waves: WAVES_1,
-      preview: 'assets/images/maps/level1.png',
-      unlockAfter: null
-    },
-    2: {
-      map: MAP_DATA_2,
-      waves: WAVES_2,
-      preview: 'assets/images/maps/level2.png',
-      unlockAfter: { level: 1 }
-    }
-  };
-
-export const TILE_IMAGES = {
+// default grass/dirt tiles
+export const TILE_IMAGES_DEFAULT = {
   S: 'assets/images/tiles/path.svg',
   G: 'assets/images/tiles/grass.svg',
   E: 'assets/images/tiles/path.svg',
@@ -110,6 +102,15 @@ export const TILE_IMAGES = {
   L4: 'assets/images/tiles/L4.svg'
 };
 
+// different level tiles: beach, airport, snow etc.
+export const TILE_IMAGES_BEACH = {
+  S: 'assets/images/tiles/sand.svg',
+  G: 'assets/images/tiles/beach_grass.svg',
+  T: 'assets/images/tiles/palm_tree.svg',
+  P: 'assets/images/tiles/sand_path.svg',
+  E: 'assets/images/tiles/sand_end.svg',
+};
+
 export const ENEMY_IMAGES = {
   basic: 'assets/images/enemies/baddie.svg',
   fast: 'assets/images/enemies/fast.svg',
@@ -118,6 +119,23 @@ export const ENEMY_IMAGES = {
   boss: 'assets/images/enemies/boss.svg',
   healer: 'assets/images/enemies/healer.svg',
   plane: 'assets/images/enemies/plane.svg'
+};
+
+export const LEVELS = {
+  1: {
+    map: MAP_DATA_1,
+    waves: WAVES_1,
+    preview: 'assets/images/maps/level1.png',
+    tiles: TILE_IMAGES_DEFAULT,
+    unlockAfter: null
+  },
+  2: {
+    map: MAP_DATA_2,
+    waves: WAVES_2,
+    preview: 'assets/images/maps/level2.png',
+    tiles: TILE_IMAGES_DEFAULT,
+    unlockAfter: { level: 1 }
+  }
 };
 
 
@@ -149,7 +167,7 @@ export const ENEMY_STATS = {
   splitter: { hp: 4, speed: 45, reward: 5 },
   boss:     { hp: 70, speed: 30, reward: 25 },
   healer:   { hp: 3, speed: 60, reward: 5},
-  plane:    { hp: 10, speed: 50, reward: 10}
+  plane:    { hp: 10, speed: 81, reward: 10}
 };
 
 
@@ -206,7 +224,7 @@ export function extractPathPoints(map) {
   return points.map(p => ({ x: p.x, y: p.y }));
 }
 
-// this is where tower upgrad images are
+// this is where tower upgrade images are
 export async function loadTowerImages() {
   const towerTypes = ['basic', 'sniper', 'splash', 'slow', 'poison', 'lightning'];
   const levels = TOWER_LEVELS;
@@ -241,7 +259,9 @@ export async function loadTowerImages() {
   return result; // Use this as `this.images.towerImages`
 }
 
+// bullet images
 export const BULLET_IMAGES = {
-  basic: 'assets/images/bullets/basic.png'
+  basic: 'assets/images/bullets/basic.png',
+  splash: 'assets/images/bullets/splash.svg'
 };
 

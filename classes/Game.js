@@ -13,6 +13,7 @@ import PoisonTower from './PoisonTower.js';
 import LightningTower from './LightningTower.js';
 import { loadTowerImages } from '../config.js';
 import { getTileSize } from '../config.js';
+import { ParticlePool } from './Particle.js';
 
 export default class Game {
   constructor(ctx, width, height, { tileImages, towerImages, enemyImages, bulletImages, MAP_DATA, WAVES, selectedLevel }) {
@@ -55,7 +56,8 @@ export default class Game {
     this.upgradeBtn = document.getElementById('upgrade-btn');
     this.sellBtn = document.getElementById('sell-btn');
   
-    this.bulletPool = new BulletPool(bulletImages['basic'], this);
+    //this.bulletPool = new BulletPool(bulletImages['basic'], this);
+    this.bulletPool = new BulletPool(bulletImages, this);
     this.enemyPool = new EnemyPool(PATH_POINTS, enemyImages['basic'], this);
 
     this.allTowerTypes = ['basic', 'sniper', 'splash', 'slow', 'poison', 'lightning'];
@@ -89,6 +91,10 @@ export default class Game {
     this.waveIndex = 0;
     this.spawnQueue = [];
     this.nextSpawnTimer = 0;
+
+    this.effects = [];// parachute effect?
+
+    this.particles = new ParticlePool(100);
 
     this.hud = {
       lives: document.getElementById('lives'),
@@ -226,12 +232,19 @@ beginWave() {
     this.towers.forEach(tower => tower.draw(this.ctx));
     this.towers.forEach(t => t.draw(this.ctx));
     this.bulletPool.draw(this.ctx);
+    this.particles.draw(this.ctx);
   }
   
 
   update(dt) {
     for (const enemy of this.enemies) {
       enemy.update(dt);
+      this.particles.update(dt);
+
+      if (enemy.type === 'plane') {
+        this.handlePlaneDrops(enemy, dt);
+      }
+
       if (enemy.reachedEnd && enemy.active) {
         this.lives--;
         enemy.active = false;
@@ -283,15 +296,16 @@ beginWave() {
         this.mapCompleted = true;
         const earned = this.checkAchievements();
         this.saveProgress();
-        this.endGame(`🏁 Victory! 💎 +${earned}`);
+        
         const selectedLevel = parseInt(localStorage.getItem('selectedLevel'));
         const unlockedLevel = parseInt(localStorage.getItem('unlockedLevel')) || 1;
         const nextLevel = selectedLevel + 1;
-
+        console.log('[Unlock Check]', { selectedLevel, unlockedLevel, nextLevel });
+        this.endGame(`🏁 Victory! 💎 +${earned}`);
         if (nextLevel > unlockedLevel) {
           localStorage.setItem('unlockedLevel', nextLevel);
         }
-
+        localStorage.removeItem('selectedLevel');
       }
 
     if (
@@ -323,7 +337,7 @@ beginWave() {
     this.hud.diamonds.textContent = `💎 ${this.diamonds}`;
   }
 
-  spawnEnemy(type = 'basic') {
+  spawnEnemy(type = 'basic', x = null, y = null, pathIndex = 0) {
     const stats = ENEMY_STATS[type] || ENEMY_STATS.basic;
     const enemy = this.enemyPool.get(type);
     enemy.image = this.images.enemyImages[type] || this.images.enemyImages.basic;
@@ -331,11 +345,20 @@ beginWave() {
     enemy.hp = stats.hp;
     enemy.maxHp = stats.hp;
     enemy.type = type;
+    enemy.pathIndex = pathIndex;
+  
+    if (x !== null && y !== null) {
+      enemy.x = x;
+      enemy.y = y;
+    }
+  
     enemy.onDeath = () => {
       this.gold += stats.reward;
     };
+  
     this.enemies.push(enemy);
   }
+  
 
   showMessage(text) {
     const msgBox = document.getElementById('game-message');
@@ -409,8 +432,6 @@ beginWave() {
     const centerX = tower.x * getTileSize() + getTileSize() / 2;
     const centerY = tower.y * getTileSize() + getTileSize();
   
-    //this.panel.style.left = `${canvasRect.left + centerX}px`;
-    //this.panel.style.top = `${canvasRect.top + centerY}px`;
     const tileSize = getTileSize();
     this.panel.style.left = `${tower.x * tileSize + tileSize / 2}px`;
     this.panel.style.top = `${tower.y * tileSize + tileSize * 2}px`;
@@ -470,7 +491,6 @@ beginWave() {
   endGame(message) {
     this.paused = true;
     this.showMessage(message); // optional
-    localStorage.removeItem('selectedLevel');
     // Show Game Over overlay
     const overlay = document.getElementById('game-over-overlay');
     const msg = document.getElementById('game-over-message');
@@ -745,6 +765,44 @@ beginWave() {
   }
 
   }
+
+  handlePlaneDrops(plane, dt) {
+    const halfway = plane.path.length / 2;
+  
+    if (!plane.dropScheduled && plane.pathIndex < halfway) {
+      plane.dropScheduled = true;
+  
+      const dropCount = Math.floor(Math.random() * 4) + 3;
+      const dropInterval = 0.5; // .5 secs bewteen each enemy drop
+      const allowedTypes = ['basic', 'fast', 'tank', 'splitter', 'stealth', 'healer'];
+  
+      plane.dropQueue = [];
+      plane.dropTimer = 0;
+  
+      for (let i = 0; i < dropCount; i++) {
+        const type = allowedTypes[Math.floor(Math.random() * allowedTypes.length)];
+        plane.dropQueue.push({ delay: i * dropInterval, type, dropped: false });
+      }
+    }
+  
+    if (plane.dropQueue?.length) {
+      plane.dropTimer += dt;
+  
+      for (const drop of plane.dropQueue) {
+        if (!drop.dropped && plane.dropTimer >= drop.delay) {
+          drop.dropped = true;
+  
+          const x = plane.x + (Math.random() * 30 - 15);
+          const y = plane.y + (Math.random() * 30 - 15);
+          this.spawnEnemy(drop.type, x, y, plane.pathIndex);
+  
+        }
+      }
+    }
+  }
+
+  
+  
   
   
   

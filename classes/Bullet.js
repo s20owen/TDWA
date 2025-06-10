@@ -37,7 +37,6 @@ export default class Bullet {
     const dy = (target.y + getTileSize() / 2) - y;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
-    this.speed = 300;
     this.vx = (dx / dist) * this.speed;
     this.vy = (dy / dist) * this.speed;
     this.angle = Math.atan2(dy, dx);
@@ -69,9 +68,13 @@ export default class Bullet {
 
       // Splash
       if (this.effect?.splash && this.enemies?.length) {
-        const radius = this.effect.splashRadius || getTileSize() * 1.5;
+        const radius = this.effect.splashRadius || getTileSize() * 2;
         const splashDmg = this.effect.splashDamage || this.sourceTower?.damage || 1;
-
+      
+        if (this.gameRef?.particles) {
+          this.gameRef.particles.emitBurst(this.x, this.y, 12, ['#ff4d00', '#ffa500', '#ffff66', '#ffffff']);
+        }
+        
         for (const enemy of this.enemies) {
           if (enemy !== this.target && enemy.active) {
             const dx = (enemy.x - this.x);
@@ -143,14 +146,14 @@ export default class Bullet {
 
     ctx.save();
     ctx.translate(this.x, this.y);
-    ctx.rotate(this.angle);
+    ctx.rotate(this.angle + Math.PI / 2);
     if (this.image) {
       ctx.drawImage(
         this.image,
         -getTileSize() / 4,
         -getTileSize() / 4,
-        getTileSize() / 2,
-        getTileSize() / 2
+        getTileSize() / 3,
+        getTileSize() / 3
       );
     }
     ctx.restore();
@@ -158,19 +161,28 @@ export default class Bullet {
 }
 
 export class BulletPool {
-  constructor(image, gameRef) {
-    this.pool = Array.from({ length: 50 }, () => new Bullet(image, gameRef));
-    this.image = image;
+  constructor(imageMap, gameRef) {
+    this.images = imageMap; // { basic: ..., splash: ..., etc. }
+    this.pool = [];
+    for (const type in imageMap) {
+      for (let i = 0; i < 30; i++) { // 10 bullets per type × N types = ~50 total
+        this.pool.push(new Bullet(imageMap[type], gameRef));
+      }
+    }
     this.gameRef = gameRef;
   }
 
-  get() {
+  get(bulletType = 'basic') {
+    const image = this.images[bulletType] || this.images.basic;
+    
     let bullet = this.pool.find(b => !b.active);
     if (!bullet) {
-      bullet = new Bullet(this.image, this.gameRef);
+      bullet = new Bullet(image, this.gameRef);
       this.pool.push(bullet);
+    } else {
+      bullet.image = image; // ✅ overwrite with correct image
     }
-    bullet.reset(); // Always start fresh
+    bullet.reset();
     return bullet;
   }
 

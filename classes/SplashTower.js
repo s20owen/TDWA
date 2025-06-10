@@ -8,6 +8,7 @@ export default class SplashTower extends Tower {
     this.fireRate = 1;
     this.damage = 2;
     this.splashRadius = getTileSize() * 1.5;
+    this.bulletType = 'splash';
   }
 
   update(dt, enemies, bulletPool) {
@@ -25,13 +26,14 @@ export default class SplashTower extends Tower {
         this.angle = Math.atan2(dy, dx);
 
         if (this.cooldown <= 0) {
-          const bullet = bulletPool.get();
+          const bullet = bulletPool.get(this.bulletType);
           if (bullet) {
+           
             bullet.fire(centerX, centerY, enemy, this, {
               splashRadius: this.splashRadius,
               splashDamage: this.damage,
               splash: true
-            });
+            }, enemies);
             this.cooldown = 1 / this.fireRate;
           }
         }

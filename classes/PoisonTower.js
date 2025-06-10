@@ -6,7 +6,7 @@ export default class PoisonTower extends Tower {
     super(x, y, images);
     this.range = 2.5 * getTileSize();
     this.fireRate = 1;
-    this.damage = 1;
+    this.damage = 0;
     this.dot = { damagePerSecond: 0.5, duration: 3 };
   }
 

@@ -2,7 +2,7 @@ import { getTileSize, GAME_CONFIG, TOWER_LEVELS } from '../config.js';
 
 
 export default class Tower {
-  constructor(x, y, images) {
+  constructor(x, y, images, bulletType = 'basic') {
     this.x = x;
     this.y = y;
     this.range = 2.5 * getTileSize();
@@ -13,6 +13,8 @@ export default class Tower {
     this.level = 1;
     this.selected = false;
     this.angle = 0;
+    this.bulletType = bulletType;
+   
     // ✅ Use a single base image and turret images per level
     this.baseImage = images.base;              // Static image
     this.turretImages = images.turret;         // Object: { 1: Image, 2: Image, 3: Image }
@@ -20,6 +22,7 @@ export default class Tower {
   }
 
   update(deltaTime, enemies, bulletPool) {
+   
     if (this.cooldown > 0) {
       this.cooldown -= deltaTime;
     }
@@ -37,6 +40,7 @@ export default class Tower {
         this.angle += (targetAngle - this.angle) * 10 * deltaTime;
 
         if (this.cooldown <= 0) {
+          /*
           const bullet = bulletPool.get();
           if (bullet) {
             // Offset bullet spawn to appear from turret tip
@@ -47,6 +51,20 @@ export default class Tower {
             bullet.fire(spawnX, spawnY, enemy, this);
             this.cooldown = 1 / this.fireRate;
           }
+          */
+          console.log(`[Tower] Firing bulletType: ${this.bulletType}`);
+          const bullet = bulletPool.get(this.bulletType);
+          if (bullet) {
+            
+            // Offset bullet spawn to appear from turret tip
+            const barrelLength = getTileSize() * 0.45; // adjust if needed
+            const spawnX = centerX + Math.cos(this.angle) * barrelLength;
+            const spawnY = centerY + Math.sin(this.angle) * barrelLength;
+        
+            bullet.fire(spawnX, spawnY, enemy, this);
+            this.cooldown = 1 / this.fireRate;
+          }
+
         }
         
 
@@ -85,10 +103,6 @@ export default class Tower {
       ctx.restore();
     }
 
-    // Draw level
-    //ctx.fillStyle = 'white';
-    //ctx.font = '12px Arial';
-    //ctx.fillText(`Lv${this.level}`, posX + 6, posY + 30);
   }
 
   getUpgradeCost() {

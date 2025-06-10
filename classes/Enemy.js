@@ -33,7 +33,9 @@ export default class Enemy {
     const dist = Math.sqrt(dx * dx + dy * dy);
 
     this.targetAngle = Math.atan2(dy, dx);
-    this.angle += (this.targetAngle - this.angle) * 10 * dt;
+    let deltaAngle = this.targetAngle - this.angle;
+    deltaAngle = ((deltaAngle + Math.PI) % (2 * Math.PI)) - Math.PI;
+    this.angle += deltaAngle * 10 * dt;
 
     if (dist < this.hitRadius) {
       this.currentIndex++;
@@ -75,7 +77,6 @@ export default class Enemy {
     ctx.save();
     ctx.translate(this.x + getTileSize() / 2, this.y + getTileSize() / 2);
     ctx.rotate(this.angle);
-    //ctx.drawImage(this.image, -TILE_SIZE / 2, -TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
     ctx.drawImage(this.image, -size / 2, -size / 2, size, size);
     ctx.restore();
 
